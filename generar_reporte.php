@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container mt-5">
         <h2>Reportes </h2>
-        
+        <a href="home.php"><input type="button" value="Regresar al inicio"></a> <br><br>
         <!-- Formulario para buscar encomiendas por fechas -->
         <form method="POST" action="" class="mb-4">
             <div class="form-row">

@@ -82,7 +82,7 @@ if (!isset($_SESSION['usuario'])) {
 <a href="beneficiarios.php">Gestión de Beneficiarios</a>
 <a href="crear_usuario.php">Crear Nuevo Usuario</a>
 <a href="productos.php">Gestión de Productos</a>
-<a href="reportes.php">Generar Reportes</a> 
+<a href="generar_reporte.php">Generar Reportes</a>
 <a href="logout.php">Cerrar Sesión</a>
 
 </body>

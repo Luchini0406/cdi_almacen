@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
 <!-- Mostrar la lista de beneficiarios -->
 <h2>Lista de Beneficiarios</h2>
 <!-- Agregar enlaces para agregar, editar y eliminar beneficiarios -->
-<a href="agregar_beneficiarios.php">Agregar Beneficiarios</a>
+<a href="agregar_beneficiarios.php"><input type="button" value="Agregar Beneficiarios"></a> <br> <br>
 
 <?php if (!empty($beneficiarios)): ?>
 <table>
@@ -105,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
             <td><?php echo $beneficiario['curso']; ?></td>
             <td><?php echo $beneficiario['puntos']; ?></td>
             <td>
-                <a href="editar_beneficiarios.php?item=<?php echo $beneficiario['codigo']; ?>">Editar</a>
-                <a href="eliminar_beneficiarios.php?item=<?php echo $beneficiario['codigo']; ?>">Eliminar</a>
+                <a href="editar_beneficiarios.php?item=<?php echo $beneficiario['codigo']; ?>"> <input type="button" value="Editar"></a>
+                <a href="eliminar_beneficiarios.php?item=<?php echo $beneficiario['codigo']; ?>"> <input type="button" value="Eliminar"></a>
             </td>
         </tr>
     <?php endforeach; ?>

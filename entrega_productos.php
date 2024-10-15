@@ -262,10 +262,6 @@ foreach ($_SESSION['productos_seleccionados'] as $producto) {
     </div>
 </div>
 
-  
-
-
-
     <a href="beneficiarios.php"><input type="button" value="Regresar a Gestión de Beneficiarios"></a>
 </div>
 
