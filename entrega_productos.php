@@ -230,27 +230,44 @@ foreach ($_SESSION['productos_seleccionados'] as $producto) {
 
     <?php if (!empty($_SESSION['productos_seleccionados'])): ?>
         <div class="productos-seleccionados">
-            <h3>Productos Seleccionados:</h3>
-            <ul>
-                <?php foreach ($_SESSION['productos_seleccionados'] as $index => $producto): ?>
-                    <li><?php echo $producto['nombre'] . " - " . $producto['puntos'] . " puntos (Cantidad: " . $producto['cantidad'] . ")"; ?>
+    <h3>Productos Seleccionados:</h3>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Nombre del Producto</th>
+                <th>Puntos</th>
+                <th>Cantidad</th>
+                <th>Total de Puntos</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($_SESSION['productos_seleccionados'] as $index => $producto): ?>
+                <tr>
+                    <td><?php echo $producto['nombre']; ?></td>
+                    <td><?php echo $producto['puntos']; ?></td>
+                    <td><?php echo $producto['cantidad']; ?></td>
+                    <td><?php echo $producto['puntos'] * $producto['cantidad']; ?></td>
+                    <td>
                         <form method="post" action="entrega_productos.php" style="display:inline;">
                             <input type="hidden" name="index" value="<?php echo $index; ?>">
                             <input type="submit" name="eliminar_producto" value="Eliminar">
                         </form>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-            <form method="post" action="entrega_productos.php">
-                <input type="hidden" name="codigo_beneficiario" value="<?php echo isset($codigo_beneficiario) ? $codigo_beneficiario : ''; ?>">
-                <input type="submit" name="entregar_productos" value="Entregar Productos">
-            </form>
+    <form method="post" action="entrega_productos.php">
+        <input type="hidden" name="codigo_beneficiario" value="<?php echo isset($codigo_beneficiario) ? $codigo_beneficiario : ''; ?>"> <br>
+        <input type="submit" name="entregar_productos" value="Entregar Productos">
+    </form>
 
-            <form method="post" action="entrega_productos.php">
-                <input type="submit" name="limpiar_productos" value="Limpiar Lista de Productos">
-            </form>
-        </div>
+    <form method="post" action="entrega_productos.php">
+        <input type="submit" name="limpiar_productos" value="Limpiar Lista de Productos">
+    </form>
+</div>
     <?php endif; ?>
 <br><br>
   <!-- Botón para imprimir recibo -->

@@ -13,12 +13,12 @@ if (!isset($_SESSION['usuario'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Sistema de Almacén</title>
-    <link rel="stylesheet" href="css/styles.css"> 
+    <title>Inicio - Sistema de Almacén (Usuario Limitado)</title>
+    <link rel="stylesheet" href="css/styles.css">
     <style>
         body {
-            background-image: url('fondo.jpg'); /* Cambié esto para usar el fondo */
-            background-size: cover; /* Asegura que cubra toda la pantalla */
+            background-image: url('fondo.jpg'); /* Fondo de pantalla */
+            background-size: cover;
             background-position: center;
             font-family: 'Arial', sans-serif;
             color: #34495E;
@@ -123,7 +123,7 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
 
-<h2 class="titulo-almacen">Opciones disponibles</h2>
+<h2 class="titulo-almacen">Opciones de Usuario</h2>
 <div class="container">
     <div class="imagen-logo">
         <img src="logo CDI.jpg" alt="Logo CDI" style="border: 2px solid black; margin: 10px auto; display: block; max-width: 300px; height: auto;">
@@ -131,8 +131,6 @@ if (!isset($_SESSION['usuario'])) {
     <div class="opciones">
         <a href="beneficiarios.php">Gestión de Beneficiarios</a>
         <a href="productos.php">Gestión de Productos</a>
-        <a href="generar_reporte.php">Generar Reportes</a>
-        <a href="crear_usuario.php">Crear Nuevo Usuario</a>
         <a href="logout.php">Cerrar Sesión</a>
     </div>
 </div>

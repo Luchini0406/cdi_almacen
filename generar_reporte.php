@@ -11,10 +11,40 @@ if (!isset($_SESSION['usuario'])) {
 // Inicializar la variable de resultado como vacía
 $resultado = null;
 
+// Función para obtener la fecha actual
+function obtenerFechaActual() {
+    return date('Y-m-d');
+}
+
+// Función para obtener la fecha de inicio de la semana
+function obtenerInicioSemana() {
+    return date('Y-m-d', strtotime('monday this week'));
+}
+
+// Función para obtener la fecha de inicio del mes
+function obtenerInicioMes() {
+    return date('Y-m-01');
+}
+
 // Si el usuario ha enviado el formulario con las fechas
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fecha_inicio = $_POST['fecha_inicio'];
-    $fecha_fin = $_POST['fecha_fin'];
+    if (isset($_POST['diario'])) {
+        // Reporte diario (hoy)
+        $fecha_inicio = obtenerFechaActual();
+        $fecha_fin = obtenerFechaActual();
+    } elseif (isset($_POST['semanal'])) {
+        // Reporte semanal (lunes actual hasta hoy)
+        $fecha_inicio = obtenerInicioSemana();
+        $fecha_fin = obtenerFechaActual();
+    } elseif (isset($_POST['mensual'])) {
+        // Reporte mensual (primer día del mes hasta hoy)
+        $fecha_inicio = obtenerInicioMes();
+        $fecha_fin = obtenerFechaActual();
+    } else {
+        // Si el usuario selecciona fechas manualmente
+        $fecha_inicio = $_POST['fecha_inicio'];
+        $fecha_fin = $_POST['fecha_fin'];
+    }
 
     // Si las fechas están vacías, obtener todas las encomiendas
     if (empty($fecha_inicio) || empty($fecha_fin)) {
@@ -45,8 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Reportes </h2>
+        <h2>Reportes</h2>
         <a href="home.php"><input type="button" value="Regresar al inicio"></a> <br><br>
+
         <!-- Formulario para buscar encomiendas por fechas -->
         <form method="POST" action="" class="mb-4">
             <div class="form-row">
@@ -59,7 +90,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="date" name="fecha_fin" class="form-control" value="<?php echo isset($fecha_fin) ? $fecha_fin : ''; ?>">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+            <button type="submit" class="btn btn-primary mt-3">Buscar por Rango de Fechas</button>
+            <br><br>
+            <!-- Botones para generar reportes rápidos -->
+            <button type="submit" name="diario" class="btn btn-info mt-2">Reporte Diario</button>
+            <button type="submit" name="semanal" class="btn btn-info mt-2">Reporte Semanal</button>
+            <button type="submit" name="mensual" class="btn btn-info mt-2">Reporte Mensual</button>
         </form>
 
         <!-- Tabla para mostrar los registros de encomiendas -->

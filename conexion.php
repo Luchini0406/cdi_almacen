@@ -1,8 +1,8 @@
 <?php
 
 $servername = "localhost";
-$username = "cdi";
-$password = "cdi608";
+$username = "root";
+$password = "";
 $dbname = "almacen_cdi";
 
 
