@@ -2,7 +2,6 @@
 session_start();
 include 'conexion.php'; 
 
-// Verifica si el usuario está autenticado
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
@@ -12,11 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_beneficiario']
     $codigo = $_POST['codigo'];
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
+    $segundo_apellido = $_POST['segundo_apellido'];
     $curso = $_POST['curso'];
     $puntos = $_POST['puntos'];
 
-    // Insertar nuevo beneficiario en la base de datos
-    $sql = "INSERT INTO beneficiarios (codigo, nombre, apellido, curso, puntos) VALUES ('$codigo', '$nombre', '$apellido', '$curso', '$puntos')";
+    $sql = "INSERT INTO beneficiarios (codigo, nombre, apellido, segundo_apellido, curso, puntos) VALUES ('$codigo', '$nombre', '$apellido', '$segundo_apellido', '$curso', '$puntos')";
     if (mysqli_query($conn, $sql)) {
         echo "<div class='mensaje-exito'>Beneficiario agregado con éxito.</div>";
     } else {
@@ -47,6 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_beneficiario']
         <label for="apellido">Apellido:</label>
         <input type="text" name="apellido" required>
         
+        <label for="apellido">Segundo Apellido:</label>
+        <input type="text" name="segundo_apellido" required>
+
         <label for="curso">Curso:</label>
         <input type="text" name="curso" required>
         
@@ -55,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['agregar_beneficiario']
         
         <input type="submit" name="agregar_beneficiario" value="Agregar Beneficiario">
     </form>
-    
+    <br>
     <a href="beneficiarios.php"><input type="button" value="Regresar a la lista de beneficiarios"></a>
 </div>
 

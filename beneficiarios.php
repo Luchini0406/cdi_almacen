@@ -1,32 +1,26 @@
 <?php
 session_start();
-include 'conexion.php'; // Incluimos la conexión a la base de datos
+include 'conexion.php';
 
-// Verificar si el usuario está autenticado
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit();
 }
 
-// Variable para almacenar los productos
 $beneficiarios = [];
 
-// Verificar si se ha enviado un Codigo para la búsqueda
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])) {
     $codigo_beneficiario = $_POST['codigo_beneficiario'];
 
-    // Buscar beneficiario por el codigo ingresado
     $sql_beneficiarios = "SELECT * FROM beneficiarios WHERE Codigo = '$codigo_beneficiario'";
     $result_beneficiarios = mysqli_query($conn, $sql_beneficiarios);
 
-    // Verificar si hay beneficiarios con ese Codigo
     if (mysqli_num_rows($result_beneficiarios) > 0) {
         $beneficiarios = mysqli_fetch_all($result_beneficiarios, MYSQLI_ASSOC);
     } else {
         echo "No se encontró ningún beneficiario con ese Código.";
     }
 } else {
-    // Si no se ha enviado un Codigo, mostrar todos los beneficiarios
     $sql_beneficiarios = "SELECT * FROM beneficiarios";
     $result_beneficiarios = mysqli_query($conn, $sql_beneficiarios);
     $beneficiarios = mysqli_fetch_all($result_beneficiarios, MYSQLI_ASSOC);
@@ -39,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Beneficiarios</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlazar la hoja de estilos -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -62,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
 
         .acciones a input {
             display: inline-block;
-            background-color: #2980b9;
+            background-color: #0056b3;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -111,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
         }
 
         a input {
-            background-color: #27ae60;
+            background-color: #0056b3;
             border: none;
             color: #fff;
             padding: 8px 16px;
@@ -127,25 +121,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
             background-color: #2c3e50;
             color: white;
             text-align: center;
-            padding: 10px 0;
-            position: fixed;
+            padding: 1px 0;
             width: 100%;
             bottom: 0;
         }
         .titulo h1 {
-            color: #2980b9; /* Color del texto */
-    font-size: 48px; /* Tamaño de la letra */
-    margin-bottom: 20px;
-    font-weight: bold;
-    letter-spacing: 2px; /* Espaciado entre letras */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra en el texto */
-    background-color: #34495e; /* Fondo del rectángulo */
-    padding: 10px 20px; /* Espacio interno */
-    display: center; /* Ajusta el ancho al contenido */
-    border-radius: 8px; /* Bordes redondeados para un toque elegante */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del rectángulo */
-}
+            color: #2980b9;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: #34495e;
+            padding: 10px 20px;
+            display: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -154,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
 <div class="titulo">
     <h1>Gestión de Beneficiarios</h1>
 
-    <!-- Formulario para buscar beneficiario por Codigo -->
     <h2>Buscar Beneficiario por Codigo</h2>
 
     <div class="acciones">
@@ -171,16 +163,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
         <input type="submit" value="Buscar">
     </form>
 
-    <!-- Mostrar la lista de beneficiarios -->
     <h2>Lista de Beneficiarios</h2>
-    <a href="agregar_beneficiarios.php"><input type="button" value="Agregar Beneficiarios"></a> <br> <br>
 
     <?php if (!empty($beneficiarios)): ?>
     <table>
         <tr>
             <th>Codigo</th>
             <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
             <th>Curso</th>
             <th>Puntos</th>
             <th>Acciones</th>
@@ -190,6 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo_beneficiario'])
                 <td><?php echo $beneficiario['codigo']; ?></td>
                 <td><?php echo $beneficiario['nombre']; ?></td>
                 <td><?php echo $beneficiario['apellido']; ?></td>
+                <td><?php echo $beneficiario['segundo_apellido']; ?></td>
                 <td><?php echo $beneficiario['curso']; ?></td>
                 <td><?php echo $beneficiario['puntos']; ?></td>
                 <td>

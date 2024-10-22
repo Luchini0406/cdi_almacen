@@ -18,6 +18,9 @@ if (!$result_beneficiario || mysqli_num_rows($result_beneficiario) == 0) {
 
 $beneficiario = mysqli_fetch_assoc($result_beneficiario);
 
+// Consulta para obtener el saldo actual de puntos del beneficiario
+$saldo_actual = $beneficiario['puntos'];
+
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +37,7 @@ $beneficiario = mysqli_fetch_assoc($result_beneficiario);
     <h1>Recibo de Productos Entregados</h1>
     <p>Beneficiario: <?php echo $beneficiario['nombre'] . " " . $beneficiario['apellido']; ?></p>
     <p>Código: <?php echo $beneficiario['codigo']; ?></p>
+    <p><strong>Saldo Actual de Puntos:</strong> <?php echo $saldo_actual; ?></p>
 
     <table>
         <tr>
@@ -54,15 +58,27 @@ $beneficiario = mysqli_fetch_assoc($result_beneficiario);
                     <td>{$total_puntos}</td>
                   </tr>";
         }
+
+        // Calcular el saldo restante
+        $saldo_restante = $saldo_actual - $costo_total;
         ?>
         <tr>
             <td colspan="3"><strong>Total Puntos</strong></td>
             <td><strong><?php echo $costo_total; ?></strong></td>
         </tr>
+        <tr>
+            <td colspan="3"><strong>Saldo Restante de Puntos</strong></td>
+            <td><strong><?php echo $saldo_restante; ?></strong></td>
+        </tr>
     </table>
 
+    <div class="firma">
+        <p>Firma del Beneficiario: __________________________</p>
+        <p>Firma del Responsable: __________________________</p>
+    </div>
     <button onclick="window.print()">Imprimir</button>
 </div>
+
 
 </body>
 </html>

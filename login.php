@@ -3,30 +3,36 @@ session_start();
 include 'conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
+    $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
+    // Verifica si el usuario existe en la base de datos
     $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario'";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
 
-         // Almacenar información del usuario en la sesión
-         $_SESSION['usuario'] = $row['usuario'];
-         $_SESSION['tipo'] = $row['tipo']; // Guardar el tipo de usuario
- 
-         // Verificación del tipo de usuario
-         if ($row['tipo'] == 'admin') {
-             // Redirige a home.php si el usuario es administrador
-             header("Location: home.php");
-         } else if ($row['tipo'] == 'usuario') {
-             // Redirige a homeus.php si el usuario es un usuario regular
-             header("Location: homeus.php");
-         }
-         exit();
+        // Verifica si la contraseña ingresada coincide con la de la base de datos
+        if (password_verify($password, $row['contrasena'])) {
+            // Almacenar información del usuario en la sesión
+            $_SESSION['usuario'] = $row['usuario'];
+            $_SESSION['tipo'] = $row['tipo']; // Guardar el tipo de usuario
+
+            // Verificación del tipo de usuario
+            if ($row['tipo'] == 'admin') {
+                // Redirige a home.php si el usuario es administrador
+                header("Location: home.php");
+            } else if ($row['tipo'] == 'usuario') {
+                // Redirige a homeus.php si el usuario es un usuario regular
+                header("Location: homeus.php");
+            }
+            exit();
+        } else {
+            echo "<div class='error-msg'>Contraseña incorrecta</div>";
+        }
     } else {
-        echo "<div class='error-msg'>Credenciales incorrectas</div>";
+        echo "<div class='error-msg'>Usuario no encontrado</div>";
     }
 }
 ?>
